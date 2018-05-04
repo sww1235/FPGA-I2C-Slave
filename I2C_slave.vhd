@@ -1,5 +1,6 @@
+-- args: [--std=08 --workdir=out]
 ------------------------------------------------------------
--- File      : I2C_slave.vhd
+-- File      : I2C_slave.vhdl
 ------------------------------------------------------------
 -- Author    : Peter Samarin <peter.samarin@gmail.com>
 ------------------------------------------------------------
@@ -8,26 +9,25 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+--use work.debounce.all;
 ------------------------------------------------------------
 entity I2C_slave is
-  generic (
-    SLAVE_ADDR : std_logic_vector(6 downto 0));
-  port (
-    scl              : inout std_logic;
-    sda              : inout std_logic;
-    clk              : in    std_logic;
-    rst              : in    std_logic;
-    -- User interface
-    read_req         : out   std_logic;
-    data_to_master   : in    std_logic_vector(7 downto 0);
-    data_valid       : out   std_logic;
-    data_from_master : out   std_logic_vector(7 downto 0));
+  generic (SLAVE_ADDR : std_logic_vector(6 downto 0));
+  port (scl               : inout std_logic;
+        sda               : inout std_logic;
+        clk               : in    std_logic;
+        rst               : in    std_logic;
+        -- User interface
+        read_req          : out   std_logic;
+        data_to_master    : in    std_logic_vector(7 downto 0);
+        data_valid        : out   std_logic;
+        data_from_master  : out   std_logic_vector(7 downto 0));
 end entity I2C_slave;
 ------------------------------------------------------------
 architecture arch of I2C_slave is
   -- this assumes that system's clock is much faster than SCL
   constant DEBOUNCING_WAIT_CYCLES : integer   := 4;
-  
+
   type state_t is (idle, get_address_and_cmd,
                    answer_ack_start, write,
                    read, read_ack_start,
@@ -42,7 +42,7 @@ architecture arch of I2C_slave is
   signal sda_reg                  : std_logic := '1';
   signal scl_debounced            : std_logic := '1';
   signal sda_debounced            : std_logic := '1';
-  
+
 
   -- Helpers to figure out next state
   signal start_reg       : std_logic := '0';
@@ -164,7 +164,7 @@ begin
             bits_processed_reg <= 0;
             if addr_reg = SLAVE_ADDR then  -- check req address
               state_reg <= answer_ack_start;
-              if cmd_reg = '1' then  -- issue read request 
+              if cmd_reg = '1' then  -- issue read request
                 read_req_reg       <= '1';
                 data_to_master_reg <= data_to_master;
               end if;

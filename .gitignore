@@ -1,7 +1,7 @@
 *
 !Makefile
 !*.vhd
-!*.org
+!*.md
 
 !*.png
 
@@ -9,5 +9,3 @@
 !pics/
 
 !.gitignore
-
-
