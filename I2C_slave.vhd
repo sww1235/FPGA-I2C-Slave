@@ -156,7 +156,7 @@ begin
               addr_reg(6-bits_processed_reg) <= sda_debounced;
             elsif bits_processed_reg = 7 then
               bits_processed_reg <= bits_processed_reg + 1;
-              cmd_reg            <= sda_debounced;
+              cmd_reg            <= sda_debounced; -- read or write LSB
             end if;
           end if;
 
@@ -164,7 +164,7 @@ begin
             bits_processed_reg <= 0;
             if addr_reg = SLAVE_ADDR then  -- check req address
               state_reg <= answer_ack_start;
-              if cmd_reg = '1' then  -- issue read request
+              if cmd_reg = '1' then  -- issue read request (master is requesting data)
                 read_req_reg       <= '1';
                 data_to_master_reg <= data_to_master;
               end if;
