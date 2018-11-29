@@ -9,7 +9,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
---use work.debounce.all;
+use work.debounce.all;
 ------------------------------------------------------------
 entity I2C_slave is
   generic (SLAVE_ADDR : std_logic_vector(6 downto 0));
