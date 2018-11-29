@@ -20,7 +20,7 @@ The module can be used through the following interface:
 ```
 
 When `read_req` is high, the slave fetches the data `data_to_master` in the same clock cycle, so make sure to set the correct data in advance.
-When `data_valid` becomes high, `data_from_master` provides valid data in the same clock cycle.
+When `data_valid` becomes high, `data_from_master` provides valid data in the same clock cycle. `data_valid` goes high for each byte transmitted by the master.
 
 The slave ignores all master commands directed at addresses that do not match `SLAVE_ADDR` generic.
 The 7 bits of the `SLAVE_ADDR` are usually given in the most significant bit (MSB) first format on the master side.
