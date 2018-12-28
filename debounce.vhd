@@ -1,5 +1,6 @@
+-- args: --workdir=out --std=08 --ieee=standard
 ------------------------------------------------------------
--- File      : debounce.vhd
+-- File      : debounce.vhdl
 ------------------------------------------------------------
 -- Author     : Peter Samarin <peter.samarin@gmail.com>
 ------------------------------------------------------------
@@ -9,8 +10,8 @@
 -- signals that have been stable for the whole duration of
 -- the counter
 ------------------------------------------------------------
-library ieee;
-use ieee.std_logic_1164.all;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 ------------------------------------------------------------
 entity debounce is
@@ -20,7 +21,7 @@ entity debounce is
     signal_in  : in  std_logic;
     signal_out : out std_logic;
     clk        : in  std_logic);
-end entity debounce;
+end debounce;
 ------------------------------------------------------------
 architecture arch of debounce is
   type state_t is (idle, check_input_stable);
@@ -60,4 +61,4 @@ begin
   -- output
   signal_out <= out_reg;
 
-end architecture arch;
+end arch;
