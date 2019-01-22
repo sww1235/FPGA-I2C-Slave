@@ -26,7 +26,7 @@ end debounce;
 architecture arch of debounce is
   type state_t is (idle, check_input_stable);
   signal state_reg     : state_t                          := idle;
-  signal out_reg       : std_logic                        := signal_in;
+  signal out_reg       : std_logic;
   signal signal_in_reg : std_logic;
   signal counter       : integer range 0 to WAIT_CYCLES-1 := 0;
 begin
