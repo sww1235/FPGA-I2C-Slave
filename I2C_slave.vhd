@@ -13,7 +13,7 @@ use ieee.numeric_std.all;
 ------------------------------------------------------------
 entity I2C_slave is
   generic (SLAVE_ADDR : std_logic_vector(6 downto 0));
-  port (scl               : inout std_logic;
+  port (scl               : in    std_logic;
         sda               : inout std_logic;
         clk               : in    std_logic;
         rst               : in    std_logic;
@@ -58,7 +58,7 @@ architecture arch of I2C_slave is
   signal scl_prev_reg : std_logic := '1';
   -- Slave writes on scl
   signal scl_wen_reg  : std_logic := '0';
-  signal scl_o_reg    : std_logic := '0';
+  --signal scl_o_reg    : std_logic := '0';
   signal sda_prev_reg : std_logic := '1';
   -- Slave writes on sda
   signal sda_wen_reg  : std_logic := '0';
@@ -286,10 +286,8 @@ begin
   ----------------------------------------------------------
   -- I2C interface
   ----------------------------------------------------------
-  sda <= sda_o_reg when sda_wen_reg = '1' else
-         'Z';
-  scl <= scl_o_reg when scl_wen_reg = '1' else
-         'Z';
+  sda <= sda_o_reg when sda_wen_reg = '1' else 'Z';
+  --scl <= scl_o_reg when scl_wen_reg = '1' else 'Z';
   ----------------------------------------------------------
   -- User interface
   ----------------------------------------------------------
