@@ -57,7 +57,7 @@ architecture arch of I2C_slave is
 
   signal scl_prev_reg : std_logic := '1';
   -- Slave writes on scl
-  signal scl_wen_reg  : std_logic := '0';
+  --signal scl_wen_reg  : std_logic := '0';
   --signal scl_o_reg    : std_logic := '0';
   signal sda_prev_reg : std_logic := '1';
   -- Slave writes on sda
