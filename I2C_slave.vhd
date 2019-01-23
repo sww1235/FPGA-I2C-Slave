@@ -34,7 +34,7 @@ architecture arch of I2C_slave is
 									 read, read_ack_start,
 									 read_ack_got_rising, read_stop);
 	-- I2C state management
-	signal state_reg					: state_t								:= idle;
+	signal state_reg					: state_t;
 	signal cmd_reg						: std_logic							:= '0';
 	signal bits_processed_reg	: integer range 0 to 8	:= 0;
 	signal continue_reg				: std_logic							:= '0';
@@ -135,13 +135,16 @@ begin
 	process (clk) is
 	begin
 		if rising_edge(clk) then
+			if rst = '1' then
 			-- Default assignments
 			sda_o_reg				<= '0';
 			sda_wen_reg			<= '0';
 			-- User interface
 			data_valid_reg	<= '0';
 			read_req_reg		<= '0';
-
+			state_reg				<= idle;
+			end if;
+			
 			case state_reg is
 
 				when idle =>
