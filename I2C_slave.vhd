@@ -17,6 +17,7 @@ entity I2C_slave is
 					sda								: inout	std_logic;
 					clk								: in		std_logic;
 					rst								: in		std_logic;
+					sda_wen						: out		std_logic; -- indicates when slave is writing to sda line
 					-- User interface
 					read_req					: out		std_logic;
 					data_to_master		: in		std_logic_vector(7 downto 0);
@@ -144,7 +145,7 @@ begin
 			read_req_reg		<= '0';
 			state_reg				<= idle;
 			end if;
-			
+
 			case state_reg is
 
 				when idle =>
@@ -289,6 +290,7 @@ begin
 	----------------------------------------------------------
 	-- I2C interface
 	----------------------------------------------------------
+	sda_wen <= sda_wen_reg;
 	sda <= sda_o_reg when sda_wen_reg = '1' else 'Z';
 	--scl <= scl_o_reg when scl_wen_reg = '1' else 'Z';
 	----------------------------------------------------------
