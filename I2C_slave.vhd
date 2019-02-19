@@ -14,8 +14,7 @@ use ieee.numeric_std.all;
 entity I2C_slave is
 	generic (SLAVE_ADDR : std_logic_vector(6 downto 0));
 		port (scl								: in		std_logic;
-					sda_in						: in		std_logic;
-					sda_out						: out		std_logic;
+					sda								: inout	std_logic;
 					clk								: in		std_logic;
 					rst								: in		std_logic;
 					sda_wen						: out		std_logic; -- indicates when slave is writing to sda line
@@ -98,7 +97,7 @@ begin
 		if rising_edge(clk) then
 			-- save SCL in registers that are used for debouncing
 			scl_reg	<= scl;
-			sda_reg	<= sda_in;
+			sda_reg	<= sda;
 
 			-- Delay debounced SCL and SDA by 1 clock cycle
 			scl_prev_reg			<= scl_debounced;
@@ -292,7 +291,7 @@ begin
 	-- I2C interface
 	----------------------------------------------------------
 	sda_wen <= sda_wen_reg;
-	sda_out <= sda_o_reg when sda_wen_reg = '1' else 'Z';
+	sda <= sda_o_reg when sda_wen_reg = '1' else 'Z';
 	--scl <= scl_o_reg when scl_wen_reg = '1' else 'Z';
 	----------------------------------------------------------
 	-- User interface
